@@ -30,13 +30,13 @@ fun App() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+                Text("点击!")
             }
             AnimatedVisibility(showContent) {
                 val greeting = remember { Greeting().greet() }
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+                    Text("平台: $greeting")
                 }
             }
         }

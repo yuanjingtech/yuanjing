@@ -71,6 +71,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(projects.shared)
         }
+        commonMain.dependencies {
+            implementation("org.jetbrains.compose.material3.adaptive:adaptive:1.1.1")
+        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

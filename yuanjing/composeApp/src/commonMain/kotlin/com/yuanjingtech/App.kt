@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,8 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowSizeClass
+import com.yuanjingtech.data.OrderUiState
+import com.yuanjingtech.ui.OrderViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
@@ -38,8 +42,16 @@ import yuanjing.composeapp.generated.resources.title
 @Composable
 @Preview
 fun App(
-    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass
+    windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
+    orderViewModel: OrderViewModel = viewModel { OrderViewModel() },
 ) {
+    val orderState: OrderUiState by orderViewModel.uiState.collectAsState(
+        initial = OrderUiState(
+            pickupOptions = listOf(
+                "xxxxx"
+            )
+        )
+    )
     // Determines whether the top app bar should be displayed
     val showTopAppBar = windowSizeClass.windowHeightSizeClass != WindowHeightSizeClass.COMPACT
     AppEnvironment {
@@ -102,6 +114,16 @@ fun App(
                         Image(painterResource(Res.drawable.compose_multiplatform), null)
                         Text("平台: $greeting")
                     }
+                }
+                //show orderState.price
+                if (orderState.pickupOptions.isNotEmpty()) {
+                    Text("价格: ${orderState.price}")
+                    Text("取货选项:")
+                    orderState.pickupOptions.forEach { option ->
+                        Text(option)
+                    }
+                } else {
+                    Text("没有可用的取货选项")
                 }
             }
         }

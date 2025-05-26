@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My awesome app</string>
+    <string name="title">现代企业多租户全栈跨端开发</string>
+    <string-array name="str_arr">
+        <item>item \u2605</item>
+        <item>item \u2318</item>
+        <item>item \u00BD</item>
+    </string-array>
+</resources>

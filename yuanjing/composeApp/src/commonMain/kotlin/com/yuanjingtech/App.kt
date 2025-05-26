@@ -25,9 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowSizeClass
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import yuanjing.composeapp.generated.resources.Res
 import yuanjing.composeapp.generated.resources.compose_multiplatform
+import yuanjing.composeapp.generated.resources.str_arr
+import yuanjing.composeapp.generated.resources.title
 
 @Composable
 @Preview
@@ -38,7 +42,7 @@ fun App(
     val showTopAppBar = windowSizeClass.windowHeightSizeClass != WindowHeightSizeClass.COMPACT
 
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
+        var showContent by remember { mutableStateOf(true) }
         Column(
             modifier = Modifier
                 .safeContentPadding()
@@ -46,11 +50,12 @@ fun App(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             if (showTopAppBar) {
-                Text("现代企业多租户全栈跨端开发")
+                Text(stringResource(Res.string.title))
             }
             FlowRow {
                 Text("欢迎使用Jetpack Compose Multiplatform!")
                 Text("${windowSizeClass.windowHeightSizeClass}")
+
                 Text(
                     "Compose Multiplatform!",
                     modifier = Modifier.background(Color.Red)
@@ -60,6 +65,9 @@ fun App(
                         .background(Color.Yellow)
                 )
             }
+            Text(stringArrayResource(Res.array.str_arr)[0])
+            Text(stringArrayResource(Res.array.str_arr)[1])
+            Text(stringArrayResource(Res.array.str_arr)[2])
             Button(onClick = { showContent = !showContent }) {
                 Text("点击!")
             }

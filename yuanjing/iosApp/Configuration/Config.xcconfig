@@ -1,4 +1,4 @@
-TEAM_ID=
+TEAM_ID=TT5SA69489
 
 PRODUCT_NAME=yuanjing
 PRODUCT_BUNDLE_IDENTIFIER=com.yuanjingtech.yuanjing$(TEAM_ID)

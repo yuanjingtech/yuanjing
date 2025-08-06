@@ -71,6 +71,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(projects.shared)
+            implementation(projects.features.jintianchishenme)
         }
         commonMain.dependencies {
             implementation("org.jetbrains.compose.material3.adaptive:adaptive:1.1.1")

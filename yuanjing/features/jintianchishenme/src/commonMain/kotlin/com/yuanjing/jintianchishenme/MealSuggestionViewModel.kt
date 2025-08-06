@@ -2,8 +2,8 @@ package com.yuanjingtech.ui.jintianchishenme
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yuanjingtech.data.Meal
-import com.yuanjingtech.data.MealRepository
+import com.yuanjing.jintianchishenme.data.Meal
+import com.yuanjing.jintianchishenme.data.MealRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,10 +11,11 @@ import kotlinx.coroutines.launch
 
 /**
  * ViewModel for managing meal suggestions and interactions
+ * 现在使用 Koin 依赖注入来获取 MealRepository
  */
-class MealSuggestionViewModel : ViewModel() {
-    private val repository = MealRepository()
-
+class MealSuggestionViewModel(
+    private val repository: MealRepository
+) : ViewModel() {
     private val _currentMeal = MutableStateFlow<Meal?>(null)
     val currentMeal: StateFlow<Meal?> = _currentMeal.asStateFlow()
 

@@ -15,8 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.yuanjingtech.data.Meal
-import com.yuanjingtech.ui.jintianchishenme.MealSuggestionViewModel
+import com.yuanjing.jintianchishenme.data.Meal
 
 @Composable
 fun MealSuggestionCard(

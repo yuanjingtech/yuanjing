@@ -1,4 +1,4 @@
-package com.yuanjingtech.data
+package com.yuanjing.jintianchishenme.data
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

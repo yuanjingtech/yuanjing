@@ -41,7 +41,12 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
+            // Koin 依赖注入框架 - 使用 api 暴露给依赖模块
+            api(libs.koin)
             // put your Multiplatform dependencies here
+            api(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.viewmodel.compose)
+            api(libs.androidx.lifecycle.runtimeCompose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

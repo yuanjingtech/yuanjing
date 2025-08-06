@@ -34,7 +34,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun MealSuggestionScreen(
     modifier: Modifier = Modifier,
-    viewModel: MealSuggestionViewModel = viewModel { MealSuggestionViewModel() }
+    viewModel: MealSuggestionViewModel = viewModel()
 ) {
     // 收集所有需要的状态
     val currentMeal by viewModel.currentMeal.collectAsState()

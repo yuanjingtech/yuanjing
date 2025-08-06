@@ -8,8 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.yuanjingtech.data.Meal
-import com.yuanjingtech.ui.jintianchishenme.MealSuggestionViewModel
+import com.yuanjing.jintianchishenme.data.Meal
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

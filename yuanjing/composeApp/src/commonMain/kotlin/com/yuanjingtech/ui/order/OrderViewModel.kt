@@ -1,4 +1,4 @@
-package com.yuanjingtech.ui
+package com.yuanjingtech.ui.order
 
 import androidx.lifecycle.ViewModel
 import com.yuanjingtech.data.OrderUiState

@@ -1,35 +1,23 @@
 package com.yuanjingtech
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.*
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowSizeClass
-import com.yuanjingtech.data.OrderUiState
-import com.yuanjingtech.ui.MealSuggestionViewModel
-import com.yuanjingtech.ui.OrderViewModel
-import com.yuanjingtech.ui.components.MealCategoryQuickSuggestions
-import com.yuanjingtech.ui.components.MealSuggestionCard
-import com.yuanjingtech.ui.components.MealSuggestionHeader
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringArrayResource
+import com.yuanjingtech.ui.demo.DemoScreen
+import com.yuanjingtech.ui.screens.MainScreen
+import com.yuanjingtech.ui.jintianchishenme.MealSuggestionScreen
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import yuanjing.composeapp.generated.resources.Res
-import yuanjing.composeapp.generated.resources.compose_multiplatform
-import yuanjing.composeapp.generated.resources.str_arr
 import yuanjing.composeapp.generated.resources.title
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,125 +25,54 @@ import yuanjing.composeapp.generated.resources.title
 @Preview
 fun App(
     windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
-    orderViewModel: OrderViewModel = viewModel { OrderViewModel() },
-    mealViewModel: MealSuggestionViewModel = viewModel { MealSuggestionViewModel() },
 ) {
-    val orderState: OrderUiState by orderViewModel.uiState.collectAsState(
-        initial = OrderUiState(
-            pickupOptions = listOf(
-                "xxxxx"
-            )
-        )
-    )
-    val currentMeal by mealViewModel.currentMeal.collectAsState()
-    val suggestionMessage by mealViewModel.suggestionMessage.collectAsState()
-    val mealCount by mealViewModel.mealCount.collectAsState()
-
-    // Determines whether the top app bar should be displayed
+    // 判断是否显示顶部应用栏
     val showTopAppBar = windowSizeClass.windowHeightSizeClass != WindowHeightSizeClass.COMPACT
+
+    val tabTitles = listOf("主页", "今天吃什么", "演示")
+    val pagerState = rememberPagerState(pageCount = { tabTitles.size })
+    val scope = rememberCoroutineScope()
 
     AppEnvironment {
         MaterialTheme {
-            var showContent by remember { mutableStateOf(true) }
             Column(
-                modifier = Modifier
-                    .safeContentPadding()
-                    .fillMaxSize(),
+                modifier = Modifier.safeContentPadding().fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 if (showTopAppBar) {
-                    Text(stringResource(Res.string.title))
-                }
-                // Meal Suggestion System - Using modular components
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    MealSuggestionHeader(mealCount = mealCount)
-
-                    MealSuggestionCard(
-                        currentMeal = currentMeal,
-                        suggestionMessage = suggestionMessage,
-                        onGenerateSuggestion = { mealViewModel.generateMealSuggestion() },
-                        modifier = Modifier.padding(8.dp)
-                    )
-
-                    MealCategoryQuickSuggestions(
-                        viewModel = mealViewModel,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    Text("语言和区域: ")
-                    Text(LocalAppLocale.current)
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    Text("主题模式: ")
-                    Text(if (LocalAppTheme.current) "深色模式" else "浅色模式")
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    Text("密度: ")
-                    Text("${LocalAppDensity.current.density}")
-                }
-                FlowRow {
-                    Text("欢迎使用Jetpack Compose Multiplatform!")
-                    Text("${windowSizeClass.windowHeightSizeClass}")
                     Text(
-                        "Compose Multiplatform!",
-                        modifier = Modifier.background(Color.Red)
-                            .padding(10.dp)
-                            .background(Color.Blue)
-                            .padding(5.dp)
-                            .background(Color.Yellow)
+                        stringResource(Res.string.title),
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.padding(vertical = 8.dp)
                     )
                 }
-
-                Text(stringArrayResource(Res.array.str_arr)[0])
-                Text(stringArrayResource(Res.array.str_arr)[1])
-                Text(stringArrayResource(Res.array.str_arr)[2])
-
-                Button(onClick = { showContent = !showContent }) {
-                    Text("点击!")
-                }
-
-                AnimatedVisibility(showContent) {
-                    val greeting = remember { Greeting().greet() }
-                    Column(
-                        Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Image(painterResource(Res.drawable.compose_multiplatform), null)
-                        Text("平台: $greeting")
+                // 标签页内容
+                HorizontalPager(
+                    state = pagerState, modifier = Modifier.fillMaxWidth().weight(1f)
+                ) { page ->
+                    when (page) {
+                        0 -> MainScreen()
+                        1 -> MealSuggestionScreen()
+                        2 -> DemoScreen()
                     }
                 }
-
-                // Show original order data
-                if (orderState.pickupOptions.isNotEmpty()) {
-                    Text("价格: ${orderState.price}")
-                    Text("取货选项:")
-                    orderState.pickupOptions.forEach { option ->
-                        Text(option)
+                // 主标签页导航
+                TabRow(
+                    selectedTabIndex = pagerState.currentPage, modifier = Modifier.fillMaxWidth()
+                ) {
+                    tabTitles.forEachIndexed { index, title ->
+                        Tab(selected = pagerState.currentPage == index, onClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        }, text = {
+                            Text(
+                                text = title, style = MaterialTheme.typography.labelLarge
+                            )
+                        })
                     }
-                } else {
-                    Text("没有可用的取货选项")
                 }
             }
         }
     }
-}
-
-@Composable
-fun Row(content: @Composable () -> Unit) {
-    TODO("Not yet implemented")
 }

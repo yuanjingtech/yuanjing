@@ -1,7 +1,8 @@
-package com.yuanjingtech.ui.components
+package com.yuanjingtech.ui.jintianchishenme
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -11,10 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.yuanjingtech.data.Meal
-import com.yuanjingtech.ui.MealSuggestionViewModel
+import com.yuanjingtech.ui.jintianchishenme.MealSuggestionViewModel
 
 @Composable
 fun MealSuggestionCard(
@@ -73,8 +75,8 @@ fun MealCategoryQuickSuggestions(
             fontWeight = FontWeight.Medium,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-        
-        androidx.compose.foundation.layout.FlowRow(
+
+        FlowRow(
             modifier = Modifier.padding(top = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -112,7 +114,7 @@ fun MealSuggestionHeader(
         Text(
             "共收录了 $mealCount 道菜",
             style = MaterialTheme.typography.bodySmall,
-            color = androidx.compose.ui.graphics.Color.Gray
+            color = Color.Gray
         )
     }
 }

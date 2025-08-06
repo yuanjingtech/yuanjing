@@ -1,4 +1,4 @@
-package com.yuanjingtech.ui
+package com.yuanjingtech.ui.jintianchishenme
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,6 +24,10 @@ class MealSuggestionViewModel : ViewModel() {
     private val _mealCount = MutableStateFlow(0)
     val mealCount: StateFlow<Int> = _mealCount.asStateFlow()
 
+    // Add meal history tracking
+    private val _mealHistory = MutableStateFlow<List<Meal>>(emptyList())
+    val mealHistory: StateFlow<List<Meal>> = _mealHistory.asStateFlow()
+
     init {
         loadInitialData()
     }
@@ -40,6 +44,8 @@ class MealSuggestionViewModel : ViewModel() {
             if (randomMeal != null) {
                 _currentMeal.value = randomMeal
                 _suggestionMessage.value = generateSuggestionMessage(randomMeal)
+                // Add to history
+                addToHistory(randomMeal)
             } else {
                 _currentMeal.value = null
                 _suggestionMessage.value = "抱歉，暂时没有可推荐的菜品！"
@@ -68,6 +74,8 @@ class MealSuggestionViewModel : ViewModel() {
                 val randomMeal = meals.random()
                 _currentMeal.value = randomMeal
                 _suggestionMessage.value = "${category}推荐：${randomMeal.name}"
+                // Add to history
+                addToHistory(randomMeal)
             } else {
                 _currentMeal.value = null
                 _suggestionMessage.value = "暂无${category}类菜品推荐"
@@ -82,11 +90,26 @@ class MealSuggestionViewModel : ViewModel() {
                 val randomMeal = meals.random()
                 _currentMeal.value = randomMeal
                 _suggestionMessage.value = "${tag}推荐：${randomMeal.name}"
+                // Add to history
+                addToHistory(randomMeal)
             } else {
                 _currentMeal.value = null
                 _suggestionMessage.value = "暂无${tag}类菜品推荐"
             }
         }
+    }
+
+    // Add helper method to manage history
+    private fun addToHistory(meal: Meal) {
+        val currentHistory = _mealHistory.value.toMutableList()
+        // Avoid duplicates in recent history
+        currentHistory.removeAll { it.id == meal.id }
+        currentHistory.add(meal)
+        // Keep only last 20 meals
+        if (currentHistory.size > 20) {
+            currentHistory.removeAt(0)
+        }
+        _mealHistory.value = currentHistory
     }
 
     fun resetSuggestion() {

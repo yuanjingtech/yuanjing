@@ -1,3 +1,4 @@
 #!/bin/sh
 brew install mise
-//export PATH="/opt/homebrew/bin/:$PATH"
+where mise
+export PATH="/opt/homebrew/bin/:$PATH"

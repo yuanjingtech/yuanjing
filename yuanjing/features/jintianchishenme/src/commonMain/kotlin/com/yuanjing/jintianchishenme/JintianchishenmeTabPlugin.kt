@@ -19,18 +19,17 @@ class JintianchishenmeTabPlugin : TabPlugin {
     override val priority: Int = 10 // 高优先级，显示在前面
     override val description: String = "专业的餐食推荐功能模块，提供智能化的用餐建议"
 
-    @Composable
-    override fun Content(modifier: Modifier) {
-        JintianchishenmeScreen(modifier = modifier)
+    override fun createContent(): @Composable() (Modifier) -> Unit {
+        return { modifier ->
+            JintianchishenmeScreen(modifier = modifier)
+        }
     }
 
     override fun initialize() {
-        super.initialize()
         println("今天吃什么插件初始化完成 - 版本: $version")
     }
 
     override fun cleanup() {
-        super.cleanup()
         println("今天吃什么插件已清理")
     }
 }

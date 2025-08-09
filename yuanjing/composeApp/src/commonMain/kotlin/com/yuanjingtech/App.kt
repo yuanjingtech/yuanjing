@@ -134,7 +134,7 @@ fun App(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.TopStart
                         ) {
-                            plugin.Content(modifier = Modifier.fillMaxSize())
+                            plugin.createContent().invoke(Modifier.fillMaxSize())
 
                             // 调试信息（可选）
                             Card(

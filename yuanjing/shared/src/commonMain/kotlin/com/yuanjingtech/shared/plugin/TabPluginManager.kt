@@ -15,7 +15,6 @@ object TabPluginManager {
 
     // 使用StateFlow提供响应式的插件列表
     private val _availablePlugins = MutableStateFlow<List<TabPlugin>>(emptyList())
-    val availablePlugins: StateFlow<List<TabPlugin>> = _availablePlugins.asStateFlow()
 
     private val _enabledPlugins = MutableStateFlow<List<TabPlugin>>(emptyList())
     val enabledPlugins: StateFlow<List<TabPlugin>> = _enabledPlugins.asStateFlow()
@@ -56,57 +55,6 @@ object TabPluginManager {
         }
     }
 
-    /**
-     * 启用指定插件
-     */
-    fun enablePlugin(pluginId: String): Boolean {
-        val plugin = _availablePlugins.value.find { it.id == pluginId }
-        return if (plugin != null && !_enabledPlugins.value.contains(plugin)) {
-            val currentEnabled = _enabledPlugins.value.toMutableList()
-            currentEnabled.add(plugin)
-            _enabledPlugins.value = currentEnabled.sortedBy { it.priority }
-            println("✅ Enabled plugin: ${plugin.title}")
-            true
-        } else {
-            false
-        }
-    }
-
-    /**
-     * 禁用指定插件
-     */
-    fun disablePlugin(pluginId: String): Boolean {
-        val plugin = _enabledPlugins.value.find { it.id == pluginId }
-        return if (plugin != null) {
-            _enabledPlugins.value = _enabledPlugins.value.filter { it.id != pluginId }
-            println("❌ Disabled plugin: ${plugin.title}")
-            true
-        } else {
-            false
-        }
-    }
-
-    /**
-     * 获取指定插件
-     */
-    fun getPlugin(pluginId: String): TabPlugin? {
-        return _availablePlugins.value.find { it.id == pluginId }
-    }
-
-    /**
-     * 清理所有插件
-     */
-    fun cleanup() {
-        _availablePlugins.value = emptyList()
-        _enabledPlugins.value = emptyList()
-        isInitialized = false
-        println("🧹 TabPluginManager: Cleaned up all plugins")
-    }
-
-    /**
-     * 检查是否已初始化
-     */
-    fun isInitialized(): Boolean = isInitialized
 }
 
 /**

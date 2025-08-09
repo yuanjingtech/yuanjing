@@ -46,13 +46,13 @@ interface TabPlugin {
     val description: String get() = ""
 
     /**
-     * 标签页内容组件
+     * 标签页内容组件构造器
      *
-     * @param modifier 修饰符
-     * @return 标签页的完整UI组件
+     * 返回一个构造 Composable 的函数，用于创建标签页的UI组件
+     *
+     * @return 返回一个接受 Modifier 参数的 Composable 函数
      */
-    @Composable
-    fun Content(modifier: Modifier = Modifier)
+    fun createContent(): @Composable() ((modifier: Modifier) -> Unit)
 
     /**
      * 插件初始化方法

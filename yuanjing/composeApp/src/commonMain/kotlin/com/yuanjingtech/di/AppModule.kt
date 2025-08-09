@@ -1,6 +1,8 @@
 package com.yuanjingtech.di
 
 import com.yuanjingtech.shared.di.getSharedModules
+import com.yuanjingtech.ui.demo.DemoTabPlugin
+import com.yuanjingtech.ui.main.MainTabPlugin
 import com.yuanjingtech.ui.order.OrderViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.factoryOf
@@ -23,11 +25,11 @@ val appModule = module {
  */
 val pluginModule = module {
     // TabPlugin实例 - 绑定到接口以便自动发现
-    factory<com.yuanjingtech.shared.home.tab.TabPlugin> { 
-        com.yuanjingtech.plugin.builtin.MainTabPlugin() 
+    factory<com.yuanjingtech.shared.home.tab.TabPlugin> {
+        MainTabPlugin()
     }
-    factory<com.yuanjingtech.shared.home.tab.TabPlugin> { 
-        com.yuanjingtech.plugin.builtin.DemoTabPlugin() 
+    factory<com.yuanjingtech.shared.home.tab.TabPlugin> {
+        DemoTabPlugin()
     }
     
 }

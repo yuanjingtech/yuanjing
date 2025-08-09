@@ -5,6 +5,7 @@ import com.yuanjingtech.shared.plugin.TabPluginManager
 import com.yuanjingtech.shared.plugin.DiscoveryResult
 import com.yuanjingtech.ui.main.MainTabPlugin
 import com.yuanjingtech.ui.demo.DemoTabPlugin
+import com.yuanjingtech.ui.setting.plugins.tab.SettingsTabPlugin
 import com.yuanjing.jintianchishenme.JintianchishenmeTabPlugin
 
 /**
@@ -23,7 +24,8 @@ object PluginDiscoveryService {
             val plugins = listOf<TabPlugin>(
                 MainTabPlugin(),
                 DemoTabPlugin(),
-                JintianchishenmeTabPlugin()
+                JintianchishenmeTabPlugin(),
+                SettingsTabPlugin()
             )
 
             println("🔍 PluginDiscoveryService: Discovered ${plugins.size} TabPlugin(s)")

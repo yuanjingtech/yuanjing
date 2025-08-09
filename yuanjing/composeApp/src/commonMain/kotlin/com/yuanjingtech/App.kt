@@ -13,6 +13,7 @@ import androidx.window.core.layout.WindowHeightSizeClass
 import androidx.window.core.layout.WindowSizeClass
 import com.yuanjingtech.di.initializeKoin
 import com.yuanjingtech.shared.plugin.TabPluginManager
+import com.yuanjingtech.shared.developer.DebugModeProvider
 import com.yuanjingtech.plugin.PluginDiscoveryService
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
@@ -129,6 +130,11 @@ fun App(
                     if (page < enabledPlugins.size) {
                         val plugin = enabledPlugins[page]
 
+                        // 监听调试模式状态
+                        val isDeveloperOptionsEnabled by DebugModeProvider.developerOptionsFlow.collectAsState()
+                        val isDebugModeEnabled by DebugModeProvider.debugModeFlow.collectAsState()
+                        val shouldShowDebugInfo = isDeveloperOptionsEnabled && isDebugModeEnabled
+
                         // 显示插件内容
                         Box(
                             modifier = Modifier.fillMaxSize(),
@@ -136,22 +142,44 @@ fun App(
                         ) {
                             plugin.createContent().invoke(Modifier.fillMaxSize())
 
-                            // 调试信息（可选）
-                            Card(
-                                modifier = Modifier
-                                    .padding(8.dp)
-                                    .align(Alignment.TopEnd),
-                                colors = CardDefaults.cardColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(
-                                        alpha = 0.9f
+                            // 调试信息（仅在开发者选项和调试模式都启用时显示）
+                            if (shouldShowDebugInfo) {
+                                Card(
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .align(Alignment.TopEnd),
+                                    colors = CardDefaults.cardColors(
+                                        containerColor = MaterialTheme.colorScheme.errorContainer.copy(
+                                            alpha = 0.9f
+                                        )
                                     )
-                                )
-                            ) {
-                                Text(
-                                    text = "${plugin.id}\nv${plugin.version}",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    modifier = Modifier.padding(4.dp)
-                                )
+                                ) {
+                                    Column(
+                                        modifier = Modifier.padding(6.dp),
+                                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                                    ) {
+                                        Text(
+                                            text = "🐛 DEBUG",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onErrorContainer
+                                        )
+                                        Text(
+                                            text = "ID: ${plugin.id}",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onErrorContainer
+                                        )
+                                        Text(
+                                            text = "版本: ${plugin.version}",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onErrorContainer
+                                        )
+                                        Text(
+                                            text = "优先级: ${plugin.priority}",
+                                            style = MaterialTheme.typography.labelSmall,
+                                            color = MaterialTheme.colorScheme.onErrorContainer
+                                        )
+                                    }
+                                }
                             }
                         }
                     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		4D13AAD52E473BE800D5D28F /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		B9DA97B12DC1472C00A4DA20 /* yuanjing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yuanjing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -47,9 +48,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D13AAD42E473BC900D5D28F /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				4D13AAD52E473BE800D5D28F /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		B9DA97A82DC1472C00A4DA20 = {
 			isa = PBXGroup;
 			children = (
+				4D13AAD42E473BC900D5D28F /* ci_scripts */,
 				B9DA98002DC14AA900A4DA20 /* Configuration */,
 				B9DA97B32DC1472C00A4DA20 /* iosApp */,
 				B9DA97B22DC1472C00A4DA20 /* Products */,

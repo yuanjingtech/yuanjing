@@ -1,16 +1,7 @@
 package com.yuanjingtech.ui.setting.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,16 +10,22 @@ import androidx.compose.ui.unit.dp
 
 /**
  * 开发者选项设置卡片
+ *
+ * 提供开发者选项和调试模式的开关功能，包括：
+ * - 开发者选项主开关
+ * - 调试模式开关（条件显示）
+ * - 视觉反馈（启用时显示错误容器样式）
  */
 @Composable
 fun DeveloperOptionsCard(
     isDeveloperOptionsEnabled: Boolean,
     isDebugModeEnabled: Boolean,
     onToggleDeveloperOptions: () -> Unit,
-    onToggleDebugMode: () -> Unit
+    onToggleDebugMode: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier.Companion.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = if (isDeveloperOptionsEnabled) {
                 MaterialTheme.colorScheme.errorContainer
@@ -38,11 +35,12 @@ fun DeveloperOptionsCard(
         )
     ) {
         Column(
-            modifier = Modifier.Companion.padding(16.dp),
+            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+            // 卡片标题
             Row(
-                verticalAlignment = Alignment.Companion.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
@@ -52,15 +50,15 @@ fun DeveloperOptionsCard(
                 Text(
                     text = "开发者选项",
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Companion.SemiBold
+                    fontWeight = FontWeight.SemiBold
                 )
             }
 
             // 开发者选项开关
             Row(
-                modifier = Modifier.Companion.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Companion.CenterVertically
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Column {
                     Text(
@@ -83,9 +81,9 @@ fun DeveloperOptionsCard(
             if (isDeveloperOptionsEnabled) {
                 HorizontalDivider()
                 Row(
-                    modifier = Modifier.Companion.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.Companion.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column {
                         Text(

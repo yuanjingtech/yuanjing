@@ -15,6 +15,7 @@ import com.yuanjingtech.di.initializeKoin
 import com.yuanjingtech.shared.plugin.TabPluginManager
 import com.yuanjingtech.shared.developer.DebugModeProvider
 import com.yuanjingtech.plugin.PluginDiscoveryService
+import com.yuanjingtech.ui.theme.AppThemeWrapper
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -50,7 +51,7 @@ fun App(
     val showTopAppBar = windowSizeClass.windowHeightSizeClass != WindowHeightSizeClass.COMPACT
 
     AppEnvironment {
-        MaterialTheme {
+        AppThemeWrapper {
             // 当没有插件可用时的处理
             if (enabledPlugins.isEmpty()) {
                 Column(
@@ -73,7 +74,7 @@ fun App(
                         )
                     }
                 }
-                return@MaterialTheme
+                return@AppThemeWrapper
             }
 
             // 设置分页状态

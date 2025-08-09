@@ -27,16 +27,17 @@ fun App(
     windowSizeClass: WindowSizeClass = currentWindowAdaptiveInfo().windowSizeClass,
 ) {
     var initializationStatus by remember { mutableStateOf<String?>(null) }
-    
+
     // 监听已启用的插件列表
     val enabledPlugins by TabPluginManager.enabledPlugins.collectAsState()
-    
+
     // 初始化Koin和插件系统
     LaunchedEffect(Unit) {
         try {
             initializeKoin()
             val discoveryResult = PluginDiscoveryService.discoverAndRegisterPlugins()
-            initializationStatus = "发现 ${discoveryResult.totalDiscovered} 个插件，启用 ${discoveryResult.enabledCount} 个"
+            initializationStatus =
+                "发现 ${discoveryResult.totalDiscovered} 个插件，启用 ${discoveryResult.enabledCount} 个"
             println(initializationStatus)
         } catch (e: Exception) {
             initializationStatus = "初始化失败: ${e.message}"
@@ -127,30 +128,30 @@ fun App(
                 ) { page ->
                     if (page < enabledPlugins.size) {
                         val plugin = enabledPlugins[page]
-                        
+
                         // 显示插件内容
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.TopStart
                         ) {
                             plugin.Content(modifier = Modifier.fillMaxSize())
-                            
+
                             // 调试信息（可选）
-                            if (BuildConfig.DEBUG) {
-                                Card(
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .align(Alignment.TopEnd),
-                                    colors = CardDefaults.cardColors(
-                                        containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f)
+                            Card(
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .align(Alignment.TopEnd),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(
+                                        alpha = 0.9f
                                     )
-                                ) {
-                                    Text(
-                                        text = "${plugin.id}\nv${plugin.version}",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        modifier = Modifier.padding(4.dp)
-                                    )
-                                }
+                                )
+                            ) {
+                                Text(
+                                    text = "${plugin.id}\nv${plugin.version}",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    modifier = Modifier.padding(4.dp)
+                                )
                             }
                         }
                     }
@@ -158,11 +159,4 @@ fun App(
             }
         }
     }
-}
-
-/**
- * 临时的BuildConfig对象，用于调试信息显示
- */
-object BuildConfig {
-    const val DEBUG = true
 }

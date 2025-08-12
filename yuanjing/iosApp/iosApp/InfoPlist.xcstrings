@@ -1,5 +1,5 @@
 {
-  "sourceLanguage" : "en",
+  "sourceLanguage" : "zh-Hans",
   "strings" : {
     "CFBundleDisplayName" : {
       "extractionState" : "manual",
@@ -7,13 +7,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yuanjing"
+            "value" : "Yuanjing Remote Work"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "远景"
+            "value" : "远景 远程"
           }
         }
       }
@@ -22,7 +22,7 @@
       "comment" : "Bundle name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "yuanjing"

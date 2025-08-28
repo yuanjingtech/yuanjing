@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./gradlew build)",
+      "Bash(./gradlew :composeApp:assembleDebug)",
+      "Bash(find . -name \"*.kt\" -path \"*/shared/*\" -exec grep -l \"compose\\|Compose\" {} ;)",
+      "Bash(mkdir -p composeApp/src/commonMain/kotlin/com/yuanjingtech/plugin/system)",
+      "Bash(mv shared/src/commonMain/kotlin/com/yuanjingtech/shared/home/tab/* composeApp/src/commonMain/kotlin/com/yuanjingtech/plugin/system/)",
+      "Bash(find . -name \"*.kt\" -exec sed -i '' 's|com.yuanjingtech.shared.home.tab|com.yuanjingtech.plugin.system|g' {} ;)",
+      "Bash(mkdir -p shared/src/commonMain/kotlin/com/yuanjingtech/shared/plugin)",
+      "Bash(rm -rf composeApp/src/commonMain/kotlin/com/yuanjingtech/plugin/system)",
+      "Bash(./gradlew :shared:build)"
+    ],
+    "deny": []
+  }
+}
